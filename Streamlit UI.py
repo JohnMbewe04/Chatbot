@@ -1,7 +1,7 @@
 # app.py
 
 import streamlit as st
-from chatbot_Logic import get_response
+from Chatbot_Logic import get_response
 
 st.set_page_config(page_title="CrisisConnect", page_icon="🆘")
 st.title("🆘 CrisisConnect Chatbot")
