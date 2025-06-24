@@ -1,21 +1,26 @@
-# app.py
-
 import streamlit as st
-from Chatbot_Logic import get_response
+from chatbot_logic import get_response
 
-st.set_page_config(page_title="CrisisConnect", page_icon="🆘")
-st.title("🆘 CrisisConnect Chatbot")
-st.markdown("Helping Indianapolis residents connect with safety resources.")
+st.set_page_config(page_title="CrisisConnect Chatbot", page_icon="🛟")
+st.title("🛟 CrisisConnect — Public Safety Assistant")
 
-if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
+st.markdown("Type your question or describe your issue below:")
 
-user_input = st.text_input("Type your question or describe your issue", key="user_input")
+# Chat memory
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# User input
+user_input = st.text_input("You:", "")
 
 if user_input:
+    st.session_state.messages.append(("user", user_input))
     response = get_response(user_input)
-    st.session_state.chat_history.append(("You", user_input))
-    st.session_state.chat_history.append(("CrisisConnect", response))
+    st.session_state.messages.append(("bot", response))
 
-for sender, msg in st.session_state.chat_history:
-    st.markdown(f"**{sender}:** {msg}")
+# Display messages
+for sender, msg in st.session_state.messages:
+    if sender == "user":
+        st.markdown(f"**You:** {msg}")
+    else:
+        st.markdown(f"**CrisisConnect:** {msg}")
